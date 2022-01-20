@@ -53,6 +53,11 @@
 #include "grfmt_tiff.hpp"
 #include <limits>
 
+#ifdef _WIN32
+#include <filesystem>
+namespace fs = std::experimental::filesystem;
+#endif
+
 // TODO FIXIT Conflict declarations for common types like int64/uint64
 namespace tiff_dummy_namespace {
 #include "tiff.h"
@@ -253,7 +258,11 @@ bool TiffDecoder::readHeader()
         }
         else
         {
+#ifdef _WIN32
+            tif = TIFFOpenW(fs::u8path(m_filename).wstring().c_str(), "r");
+#else
             tif = TIFFOpen(m_filename.c_str(), "r");
+#endif
         }
         if (tif)
             m_tif.reset(tif, cv_tiffCloseHandle);
@@ -814,7 +823,11 @@ bool TiffEncoder::writeLibTiff( const std::vector<Mat>& img_vec, const std::vect
     }
     else
     {
+#ifdef _WIN32
+        tif = TIFFOpenW(fs::u8path(m_filename).wstring().c_str(), "w");
+#else
         tif = TIFFOpen(m_filename.c_str(), "w");
+#endif
     }
     if (!tif)
     {
