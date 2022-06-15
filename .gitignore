@@ -33,3 +33,10 @@ cmake-build-release--x64--static
 cmake-build-release--x86--static
 cmake-build-release--x64--shared--world
 cmake-build-release--x64--static--wsl
+
+get_opencv_package/Release_x86_static
+get_opencv_package/Release_x64_static
+get_opencv_package/Debug_x86_static
+get_opencv_package/Debug_x64_static
+get_opencv_package/opencv
+cmake-build-debug--x64--shared--world
